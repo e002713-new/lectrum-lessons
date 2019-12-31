@@ -48,7 +48,7 @@ const result = reduce(
     array,
     (accumulator, element, index, arrayRef) => {
         console.log(`${index}:`, accumulator, element, arrayRef);
-        console.log(accumulator, element);
+
         return accumulator + element;
     }, INITIAL_ACCUMULATOR,
 );
