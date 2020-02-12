@@ -25,8 +25,6 @@ function validate(param, argCount, firstParam = true) {
     } else if (param === undefined && !firstParam) {
         throw new Error(`${argCount} function don't return result`)
     }
-
-
 }
 
 function calculate(...rest) {

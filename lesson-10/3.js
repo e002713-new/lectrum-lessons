@@ -24,15 +24,31 @@
 
 // Решение
 
+function validate(param, argCount) {
+    if (param === undefined) {
+        try {
+
+        }catch (error) {
+            console.log(error);
+        }
+
+    }
+    //throw new Error(`callback at index ${argCount} did not return any value.`)
+}
+
 function calculateAdvanced(...rest) {
     let result = null;
 
     for (let [key, item] of rest.entries()) {
-        validate(item, key + 1);
+        // try {
+            result = item(result);
+            //validate(result, key)
+        // }
+        // catch (error) {
+        //     console.log(error);
+        // }
 
-        result = item(result);
 
-        validate(result, key + 1, false);
     }
 
     return result;
