@@ -28,18 +28,25 @@
 
 // Решение
 
+
+function compose(...rest) {
+  for (let item of rest) {
+    console.log(item);
+  }
+}
+
 const result1 = compose(
-    prevResult => prevResult + 'o',
-    prevResult => prevResult + 'l',
-    prevResult => prevResult + 'l',
-    prevResult => prevResult + 'e',
+  prevResult => prevResult + 'o',
+  prevResult => prevResult + 'l',
+  prevResult => prevResult + 'l',
+  prevResult => prevResult + 'e',
 )('h');
 const result2 = compose(
-    prevResult => prevResult + 'o',
-    prevResult => prevResult + 'l',
-    prevResult => prevResult + 'l',
-    prevResult => prevResult + 'e',
-    () => 'h',
+  prevResult => prevResult + 'o',
+  prevResult => prevResult + 'l',
+  prevResult => prevResult + 'l',
+  prevResult => prevResult + 'e',
+  () => 'h',
 )();
 
 console.log(result1); // 'hello'

@@ -25,58 +25,59 @@
 // Решение
 
 function validate(param, argCount) {
-    if (param === undefined) {
-        try {
-
-        }catch (error) {
-            console.log(error);
-        }
-
-    }
-    //throw new Error(`callback at index ${argCount} did not return any value.`)
+  if (typeof param !== 'function') {
+    throw new Error(`argument at index ${argCount} isn't function`);
+  }
 }
 
 function calculateAdvanced(...rest) {
-    let result = null;
+  let value = null;
 
-    for (let [key, item] of rest.entries()) {
-        // try {
-            result = item(result);
-            //validate(result, key)
-        // }
-        // catch (error) {
-        //     console.log(error);
-        // }
+  const errors = [];
 
-
+  for (let [key, item] of rest.entries()) {
+    validate(item, key);
+    try {
+      if (!item(value)) {
+        throw new Error(`callback at index ${key} did not return any value.`);
+      } else {
+        value = item(value);
+      }
+    } catch (error) {
+      errors.push({
+        index: key,
+        name: error.name,
+        message: error.message,
+      });
     }
-
-    return result;
+  }
+  return { value, errors };
 }
 
 
-
 const result = calculateAdvanced(
-    () => {},
-    () => {
-        return 7;
-    },
-    () => {},
-    prevResult => {
-        return prevResult + 4;
-    },
-    () => {
-        throw new RangeError('Range is too big.');
-    },
-    prevResult => {
-        return prevResult + 1;
-    },
-    () => {
-        throw new ReferenceError('ID is not defined.');
-    },
-    prevResult => {
-        return prevResult * 5;
-    },
+  () => {
+  },
+  () => {
+    return 7;
+  },
+  () => {
+  },
+  prevResult => {
+    return prevResult + 4;
+  },
+  () => {
+    throw new RangeError('Range is too big.');
+  },
+  prevResult => {
+    return prevResult + 1;
+  },
+  () => {
+    throw new ReferenceError('ID is not defined.');
+  },
+  prevResult => {
+    return prevResult * 5;
+  },
 );
 
 console.log(result);
