@@ -27,13 +27,40 @@
  */
 
 // Решение
+function validate(params) {
+  for (let param of params) {
+    if (typeof param !== 'function') {
+      throw new Error(`argument isn't function`);
+    }
 
-
-function compose(...rest) {
-  for (let item of rest) {
-    console.log(item);
+    if (typeof param() === undefined) {
+      throw new Error(`function don't return result`);
+    }
   }
 }
+
+function compose(...rest) {
+  validate(rest);
+
+  let result = '';
+
+  return (val) => {
+    const arr = rest.reverse();
+
+    if (typeof val === 'undefined') {
+      val = '';
+    }
+
+    for (let arg of arr) {
+      result = arg(result);
+    }
+
+    return val + result;
+  }
+}
+
+
+
 
 const result1 = compose(
   prevResult => prevResult + 'o',
@@ -41,6 +68,8 @@ const result1 = compose(
   prevResult => prevResult + 'l',
   prevResult => prevResult + 'e',
 )('h');
+
+
 const result2 = compose(
   prevResult => prevResult + 'o',
   prevResult => prevResult + 'l',
